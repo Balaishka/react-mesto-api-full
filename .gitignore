@@ -17,6 +17,8 @@ backend/.DS_Store
 backend/.idea
 backend/.vscode
 
+backend/.env
+
 #FRONTEND
 
 # dependencies
