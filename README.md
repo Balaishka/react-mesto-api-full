@@ -8,6 +8,7 @@
 
 Ссылка на проект: [https://balaimesto.students.nomoredomains.sbs](https://balaimesto.students.nomoredomains.sbs)  
 Ссылка на backend проекта: [https://api.balaishka.students.nomoredomains.sbs](https://api.balaishka.students.nomoredomains.sbs)
+Публичный IP-адрес сервера: [http://158.160.10.100](http://158.160.10.100)
 
 ### Стек технологий
 * React
