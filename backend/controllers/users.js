@@ -1,20 +1,14 @@
-const validator = require('validator');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jwtSign = require('../helpers/jwt-sign');
 const NotFoundError = require('../errors/not-found-err');
 const ValidationError = require('../errors/validation-err');
 const EmailConflictError = require('../errors/email-conflict-err');
-const CastError = require('../errors/cast-err');
 
 module.exports.createUser = (req, res, next) => {
   const {
     email, password, name, about, avatar,
   } = req.body;
-
-  if (!validator.isEmail(email)) {
-    throw new ValidationError('Некорректный email пользователя');
-  }
 
   bcrypt.hash(password, 10)
     .then((hash) => {
@@ -22,13 +16,7 @@ module.exports.createUser = (req, res, next) => {
         email, password: hash, name, about, avatar,
       })
         .then((user) => {
-          res.send({
-            _id: user._id,
-            email: user.email,
-            name: user.name,
-            about: user.about,
-            avatar: user.avatar,
-          });
+          res.send(user);
         })
         .catch((err) => {
           if (err.name === 'ValidationError') {
@@ -52,7 +40,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       // создаем токен
       const token = jwtSign(user._id);
-      return res.send({ token });// возвращаем токен
+      res.send({ token });// возвращаем токен
     })
     .catch(next);
 };
@@ -73,7 +61,7 @@ module.exports.getUserById = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new CastError('Неверные данные'));
+        next(new ValidationError('Неверные данные'));
         return;
       }
       next(err);
@@ -90,7 +78,7 @@ module.exports.getUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new CastError('Неверные данные'));
+        next(new ValidationError('Неверные данные'));
         return;
       }
       next(err);
@@ -100,7 +88,7 @@ module.exports.getUser = (req, res, next) => {
 module.exports.updateUserInfo = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
-    { name: req.body.name, about: req.body.about },
+    req.body,
     { new: true, runValidators: true },
   )
     .then((user) => {
@@ -110,12 +98,8 @@ module.exports.updateUserInfo = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new ValidationError('Некорректно введены данные'));
-        return;
-      }
-      if (err.name === 'CastError') {
-        next(new CastError('Неверные данные'));
+      if (err.name === 'ValidationError' || err.name === 'CastError') {
+        next(new ValidationError('Неверные данные'));
         return;
       }
       next(err);
@@ -125,7 +109,7 @@ module.exports.updateUserInfo = (req, res, next) => {
 module.exports.updateUserAvatar = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
-    { avatar: req.body.avatar },
+    req.body,
     { new: true, runValidators: true },
   )
     .then((user) => {
@@ -135,12 +119,8 @@ module.exports.updateUserAvatar = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new ValidationError('Некорректно введены данные'));
-        return;
-      }
-      if (err.name === 'CastError') {
-        next(new CastError('Неверные данные'));
+      if (err.name === 'ValidationError' || err.name === 'CastError') {
+        next(new ValidationError('Неверные данные'));
         return;
       }
       next(err);

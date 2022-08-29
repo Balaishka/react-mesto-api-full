@@ -2,10 +2,9 @@ const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
 const ForbiddenError = require('../errors/forbiddden-err');
 const ValidationError = require('../errors/validation-err');
-const CastError = require('../errors/cast-err');
 
 module.exports.getCards = (req, res, next) => {
-  Card.find({})
+  Card.find({}).sort({ createdAt: -1 })
     .populate(['owner', 'likes'])
     .then((cards) => res.send(cards))
     .catch(next);
@@ -44,7 +43,7 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new CastError('Неверные данные'));
+        next(new ValidationError('Неверные данные'));
         return;
       }
       next(err);
@@ -62,7 +61,7 @@ module.exports.likeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new CastError('Неверные данные'));
+        next(new ValidationError('Неверные данные'));
         return;
       }
       next(err);
@@ -80,7 +79,7 @@ module.exports.dislikeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new CastError('Неверные данные'));
+        next(new ValidationError('Неверные данные'));
         return;
       }
       next(err);

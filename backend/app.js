@@ -11,7 +11,7 @@ const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3005 } = process.env;
 const app = express();
 
 app.use(bodyParser.json());
@@ -42,7 +42,7 @@ app.post('/signup', celebrate({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
     avatar: Joi.string().regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/),
-  }).unknown(true),
+  }),
 }), createUser);
 
 app.use(auth);

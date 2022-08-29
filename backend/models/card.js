@@ -11,7 +11,6 @@ const cardSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
-    // match: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/,
     validate: isURL,
   },
   owner: {

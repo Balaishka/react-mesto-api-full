@@ -16,8 +16,7 @@ const auth = (req, res, next) => {
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'balai-secret');
   } catch (err) {
-    next(new UnauthorizedError('Необходима авторизация'));
-    return;
+    throw new UnauthorizedError('Необходима авторизация');
   }
 
   req.user = payload; // записываем пейлоуд в объект запроса
