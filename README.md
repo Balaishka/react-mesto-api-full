@@ -7,7 +7,7 @@
 На этом сайте вы можете выкладывать фотографии мест, где вы побывали или хотели бы побывать, с помощью удобной формы добавления. Можно зарегистрироваться и авторизоваться, редактировать свой профиль и ставить лайки на понравившиеся фотографии.
 
 Ссылка на проект: [https://balaimesto.students.nomoredomains.sbs](https://balaimesto.students.nomoredomains.sbs)  
-Ссылка на backend проекта: [https://api.balaishka.students.nomoredomains.sbs](https://api.balaishka.students.nomoredomains.sbs)
+Ссылка на backend проекта: [https://api.balaishka.students.nomoredomains.sbs](https://api.balaishka.students.nomoredomains.sbs)  
 Публичный IP-адрес сервера: [http://158.160.10.100](http://158.160.10.100)
 
 ### Стек технологий
