@@ -1,4 +1,3 @@
-// const path = require('path');
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -49,8 +48,6 @@ app.use(auth);
 
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
-
-// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(() => {
   throw new NotFoundError('Такой страницы не существует');
